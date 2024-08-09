@@ -1,0 +1,23 @@
+.draw-item {
+  border: 1px solid #ccc;
+  padding: 10px;
+  height: 25px;
+  width: 25px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+  background-color: #ffffff;
+}
+
+.normal-ball {
+  background-color: #3851a1;
+  color: white;
+}
+
+.power-ball {
+  background-color: #8b9ba9 !important;
+  color: white !important;
+}
