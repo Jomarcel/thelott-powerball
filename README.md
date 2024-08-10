@@ -1,4 +1,4 @@
-# Next to Go Races
+# Thelott Powerball
 
 ## Project Setup
 
