@@ -1,8 +1,7 @@
-import axios from "axios";
 import { ILottoApiBody, LottoResults } from "../types/lotto-picks";
-import { API_URL } from "../constants";
+import axiosConfig from "../axiosConfig";
 
 export const getLottoPicks = async (body: ILottoApiBody): Promise<LottoResults> => {
-    const { data } = await axios.post(API_URL, body);
+    const { data } = await axiosConfig.post('/sales/vmax/web/data/lotto/latestresults', body);
     return data
 };

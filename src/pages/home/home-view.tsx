@@ -20,6 +20,7 @@ import {
   TrashButton,
 } from "../../components";
 import { styles } from "./home.styles";
+import { useEffect } from "react";
 
 const initialDrawNumbers = generateNumbers(TOTAL_DRAWS);
 const initialPowerBallNumbers = generateNumbers(TOTAL_POWERBALL);
@@ -36,11 +37,13 @@ export const HomeView = () => {
   const onAutoFillHandler = () => refetch();
   const onClearHandler = () => queryClient.resetQueries();
 
-  if (isError) {
-    enqueueSnackbar(<ErrorMessage error={error} />, {
-      variant: "error",
-    });
-  }
+  useEffect(() => {
+    if (isError) {
+      enqueueSnackbar(<ErrorMessage error={error} />, {
+        variant: "error",
+      });
+    }
+  }, [isError, error, enqueueSnackbar]);
 
   return (
     <Container maxWidth="lg" sx={{ marginY: 2 }}>
