@@ -1,3 +1,11 @@
+.draw-container {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin-left: 85px;
+  flex: 1;
+}
+
 .draw-item {
   border: 1px solid #ccc;
   padding: 10px;

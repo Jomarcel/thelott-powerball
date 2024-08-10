@@ -1,6 +1,6 @@
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { HomeView } from "./home-view";
-// import "./home.css";
+import { SnackbarProvider } from "notistack";
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -13,7 +13,9 @@ const queryClient = new QueryClient({
 export const HomePage = () => {
   return (
     <QueryClientProvider client={queryClient}>
-      <HomeView />
+      <SnackbarProvider>
+        <HomeView />
+      </SnackbarProvider>
     </QueryClientProvider>
   );
 };

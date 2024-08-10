@@ -1,7 +1,6 @@
 import { Box, SxProps } from "@mui/material";
 import { FC } from "react";
 import cx from "classnames";
-import "./draw-results.css";
 
 interface IProps {
   item: number | string;

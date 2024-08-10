@@ -7,19 +7,19 @@ export const useLotteryDraws = (body: ILottoApiBody) => {
   const {
     data,
     isLoading,
+    isFetching,
     error,
     isError,
     refetch,
   } = useQuery({
     queryKey: [LOTTO_QUERY_KEY],
     queryFn: async () => {
-      const { DrawResults, ErrorInfo } = await getLottoPicks(body);
+      const { DrawResults, ErrorInfo, Success } = await getLottoPicks(body);
 
       if (ErrorInfo) throw new Error(ErrorInfo);
-      if (!Array.isArray(DrawResults) || !DrawResults.length) throw new Error('No data found')
+      if (!Array.isArray(DrawResults) || !DrawResults.length || Success === false) throw new Error('Unable to load data. Please wait a moment and try again')
 
-      const { PrimaryNumbers, SecondaryNumbers } = DrawResults[0];
-      return { PrimaryNumbers, SecondaryNumbers };
+      return DrawResults[0]
     },
     initialData: { PrimaryNumbers: [], SecondaryNumbers: [] },
     enabled: false,
@@ -30,7 +30,8 @@ export const useLotteryDraws = (body: ILottoApiBody) => {
     isLoading,
     error,
     isError,
-    refetch
+    refetch,
+    isFetching
   };
 };
 

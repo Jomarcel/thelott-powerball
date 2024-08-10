@@ -5,7 +5,7 @@ import {
   INITIAL_DRAW_COUNT,
   POWER_BALL_LABEL,
 } from "../../constants/lottery-config";
-import { styles } from "./draw-results.styles";
+import "./draw-results.css";
 
 const initialDraws: number[] = [...Array(INITIAL_DRAW_COUNT)];
 
@@ -23,7 +23,7 @@ const DrawResults: FC<IDrawResult> = ({ drawResults, powerBall }) => {
   );
 
   return (
-    <Box sx={styles.container}>
+    <Box className="draw-container">
       {/* Normal balls */}
       {results.map((item, index) => (
         <ResultItem key={index} item={item} />

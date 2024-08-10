@@ -1,6 +1,6 @@
 import { useQueryClient } from "@tanstack/react-query";
 import { Box, Container, Stack, Typography } from "@mui/material";
-import { enqueueSnackbar } from "notistack";
+import { useSnackbar } from "notistack";
 import {
   COMPANY_ID,
   MAX_DRAW_COUNT_PER_PRODUCT,
@@ -26,23 +26,28 @@ const initialPowerBallNumbers = generateNumbers(TOTAL_POWERBALL);
 
 export const HomeView = () => {
   const queryClient = useQueryClient();
+  const { enqueueSnackbar } = useSnackbar();
   const {
     data: picks,
     error,
     isError,
-    isLoading,
     refetch,
+    isLoading,
+    // isFetching,
   } = useLotteryDraws({
     CompanyId: COMPANY_ID,
     MaxDrawCountPerProduct: MAX_DRAW_COUNT_PER_PRODUCT,
     OptionalProductFilter: [PRODUCT_FILTER],
   });
 
-  const onClearHandler = () => queryClient.resetQueries();
   const onAutoFillHandler = () => refetch();
 
+  const onClearHandler = () => {
+    queryClient.resetQueries();
+  };
+
   if (isError) {
-    return enqueueSnackbar(<ErrorMessage error={error} />, {
+    enqueueSnackbar(<ErrorMessage error={error} />, {
       variant: "error",
     });
   }
@@ -51,12 +56,10 @@ export const HomeView = () => {
     <Container maxWidth="lg">
       {/* total balls drawn section */}
       <Stack sx={styles.drawResultsContainer}>
-        {!isLoading && (
-          <DrawResults
-            drawResults={picks.PrimaryNumbers}
-            powerBall={picks.SecondaryNumbers}
-          />
-        )}
+        <DrawResults
+          drawResults={picks.PrimaryNumbers}
+          powerBall={picks.SecondaryNumbers}
+        />
         <AutofillButton onClick={onAutoFillHandler} />
         <TrashButton onClick={onClearHandler} />
       </Stack>
@@ -64,7 +67,7 @@ export const HomeView = () => {
       {isLoading && <LoadingIndicator />}
 
       {/*Draws section showing a range of 1-35 */}
-      <Box sx={styles.lottoGrid}>
+      <Box data-testid="section-one" sx={styles.lottoGrid}>
         {initialDrawNumbers.map((number) => (
           <PickItem
             key={number}
@@ -78,7 +81,7 @@ export const HomeView = () => {
       <Box sx={styles.headerContainer}>
         <Typography sx={styles.headerText}>{POWERBALL_HEADER}</Typography>
       </Box>
-      <Box sx={styles.lottoGrid}>
+      <Box data-testid="powerball-section" sx={styles.lottoGrid}>
         {initialPowerBallNumbers.map((number) => (
           <PickItem
             key={number}
