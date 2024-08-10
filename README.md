@@ -14,7 +14,7 @@ git clone git@github.com:Jomarcel/thelott-powerball.git`
 nvm use
 ```
 
-2. Install dependencies
+3. Install dependencies
 
 ```sh
 npm install
@@ -26,6 +26,7 @@ npm install
 npm run dev
 ```
 
+Once the server is running, you can access the application in your browser at:
 ```sh
 http://localhost:5173/
 ```
