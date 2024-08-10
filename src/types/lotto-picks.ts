@@ -1,15 +1,15 @@
 export interface DrawResult {
-    ProductId: string
-    DrawNumber: number
-    DrawDate: string
-    DrawDisplayName: string
-    DrawLogoUrl: string
     PrimaryNumbers: number[]
     SecondaryNumbers: number[]
-    TicketNumbers: number[]
-    Dividends: Dividend[]
-    PrizeBoostPercent: number
-    PrizeBoost: number
+    ProductId?: string
+    DrawNumber?: number
+    DrawDate?: string
+    DrawDisplayName?: string
+    DrawLogoUrl?: string
+    TicketNumbers?: number[]
+    Dividends?: Dividend[]
+    PrizeBoostPercent?: number
+    PrizeBoost?: number
 }
 
 interface Dividend {

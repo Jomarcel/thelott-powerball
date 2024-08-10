@@ -12,12 +12,12 @@ export const useLotteryDraws = (body: ILottoApiBody) => {
     isError,
     refetch,
   } = useQuery({
-    queryKey: [LOTTO_QUERY_KEY],
+    queryKey: [LOTTO_QUERY_KEY, body],
     queryFn: async () => {
       const { DrawResults, ErrorInfo, Success } = await getLottoPicks(body);
 
       if (ErrorInfo) throw new Error(ErrorInfo);
-      if (!Array.isArray(DrawResults) || !DrawResults.length || Success === false) throw new Error('Unable to load data. Please wait a moment and try again')
+      if (Success === false || !Array.isArray(DrawResults) || !DrawResults.length) throw new Error('Unable to load data. Please wait a moment and try again')
 
       return DrawResults[0]
     },

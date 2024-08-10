@@ -27,24 +27,14 @@ const initialPowerBallNumbers = generateNumbers(TOTAL_POWERBALL);
 export const HomeView = () => {
   const queryClient = useQueryClient();
   const { enqueueSnackbar } = useSnackbar();
-  const {
-    data: picks,
-    error,
-    isError,
-    refetch,
-    isLoading,
-    // isFetching,
-  } = useLotteryDraws({
+  const { data, error, isError, refetch, isLoading } = useLotteryDraws({
     CompanyId: COMPANY_ID,
     MaxDrawCountPerProduct: MAX_DRAW_COUNT_PER_PRODUCT,
     OptionalProductFilter: [PRODUCT_FILTER],
   });
 
   const onAutoFillHandler = () => refetch();
-
-  const onClearHandler = () => {
-    queryClient.resetQueries();
-  };
+  const onClearHandler = () => queryClient.resetQueries();
 
   if (isError) {
     enqueueSnackbar(<ErrorMessage error={error} />, {
@@ -53,12 +43,12 @@ export const HomeView = () => {
   }
 
   return (
-    <Container maxWidth="lg">
-      {/* total balls drawn section */}
+    <Container maxWidth="lg" sx={{ marginY: 2 }}>
+      {/* Section displaying the total balls drawn, including the primary numbers and Powerball */}
       <Stack sx={styles.drawResultsContainer}>
         <DrawResults
-          drawResults={picks.PrimaryNumbers}
-          powerBall={picks.SecondaryNumbers}
+          drawResults={data.PrimaryNumbers}
+          powerBall={data.SecondaryNumbers}
         />
         <AutofillButton onClick={onAutoFillHandler} />
         <TrashButton onClick={onClearHandler} />
@@ -66,26 +56,26 @@ export const HomeView = () => {
 
       {isLoading && <LoadingIndicator />}
 
-      {/*Draws section showing a range of 1-35 */}
-      <Box data-testid="section-one" sx={styles.lottoGrid}>
+      {/* Section displaying draw numbers in the range of 1-35 */}
+      <Box data-testid="draw-numbers-section" sx={styles.lottoGrid}>
         {initialDrawNumbers.map((number) => (
           <PickItem
             key={number}
-            isPicked={picks.PrimaryNumbers.includes(number)}
+            isPicked={data.PrimaryNumbers.includes(number)}
             item={number}
           />
         ))}
       </Box>
 
-      {/* Powerball section */}
+      {/* Section displaying Powerball numbers in the range of 1-20 */}
       <Box sx={styles.headerContainer}>
         <Typography sx={styles.headerText}>{POWERBALL_HEADER}</Typography>
       </Box>
-      <Box data-testid="powerball-section" sx={styles.lottoGrid}>
+      <Box data-testid="powerball-numbers-section" sx={styles.lottoGrid}>
         {initialPowerBallNumbers.map((number) => (
           <PickItem
             key={number}
-            isPicked={picks.SecondaryNumbers.includes(number)}
+            isPicked={data.SecondaryNumbers.includes(number)}
             item={number}
           />
         ))}

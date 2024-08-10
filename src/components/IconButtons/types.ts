@@ -1,9 +1,10 @@
 import { SxProps } from "@mui/material";
 
 export interface IButtonWrapper {
-    onClick: () => void;
     icon: JSX.Element;
+    onClick: () => void;
     sx?: SxProps;
+    tooltipLabel: string;
 }
 
 export interface IButton {

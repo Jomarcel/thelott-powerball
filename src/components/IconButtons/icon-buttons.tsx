@@ -1,22 +1,29 @@
 import { FC } from "react";
-import { IconButton } from "@mui/material";
+import { IconButton, Tooltip } from "@mui/material";
 import { Delete, Bolt } from "@mui/icons-material";
 import { IButton, IButtonWrapper } from "./types";
 import { styles } from "./icon-buttons.styles";
 
-// Base button component with predefined styles
-const ButtonWrapper: FC<IButtonWrapper> = ({ onClick, sx, icon }) => {
+// Base button component with predefined styles and additional customisation via the `sx`
+const ButtonWrapper: FC<IButtonWrapper> = ({
+  icon,
+  onClick,
+  sx,
+  tooltipLabel,
+}) => {
   return (
-    <IconButton
-      edge="start"
-      onClick={onClick}
-      sx={{
-        ...styles.buttonWrapper,
-        ...sx,
-      }}
-    >
-      {icon}
-    </IconButton>
+    <Tooltip arrow placement="top" title={tooltipLabel}>
+      <IconButton
+        edge="start"
+        onClick={onClick}
+        sx={{
+          ...styles.buttonWrapper,
+          ...sx,
+        }}
+      >
+        {icon}
+      </IconButton>
+    </Tooltip>
   );
 };
 
@@ -26,6 +33,7 @@ export const TrashButton: FC<IButton> = ({ onClick }) => {
       icon={<Delete />}
       onClick={onClick}
       sx={styles.trashButton}
+      tooltipLabel="Clear"
     />
   );
 };
@@ -36,6 +44,8 @@ export const AutofillButton: FC<IButton> = ({ onClick }) => {
       icon={<Bolt />}
       onClick={onClick}
       sx={styles.autoFillButton}
+      tooltipLabel="Autofill"
+      data-testid="auto-fill-button"
     />
   );
 };
